@@ -1,5 +1,7 @@
 package studio6;
 
+import java.io.IOException;
+
 import jssc.*;
 
 public class SerialComm {
@@ -27,10 +29,32 @@ public class SerialComm {
 	}
 		
 	// TODO: Add writeByte() method from Studio 5
-	
+	public void writeByte(char ch) throws IOException, SerialPortException {
+		port.writeByte((byte) ch);
+	if(debug) {
+		String hex = String.format("%04x", (int) ch);
+		System.out.println("<0x"+hex+">");
+	}
+}
 	// TODO: Add available() method
+	public boolean available() throws SerialPortException {
+		int count = port.getInputBufferBytesCount();
+		if(count>0) {
+			return true;
+		}else if (count == 0) {
+			return false;
+			}
+		return debug;
+		}
 	
 	// TODO: Add readByte() method	
-	
-	// TODO: Add a main() method
+	public byte readByte() throws SerialPortException {
+		byte[] byteArray;
+		byteArray = new byte[1];
+		byteArray = port.readBytes(1);
+		return byteArray[0];
+		
+	}
 }
+	// TODO: Add a main() method
+
