@@ -55,6 +55,29 @@ public class SerialComm {
 		return byteArray[0];
 		
 	}
+	
+	public static void main(String[] args) {
+		SerialComm port = null;
+		try {
+			port = new SerialComm("/dev/cu.usbserial-DN035ZED");
+		} catch (SerialPortException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		while (true) {
+			try {
+				if (port.available()) {
+					byte tmp = port.readByte();
+					System.out.print((char)tmp);
+				}
+			} catch (SerialPortException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
 	// TODO: Add a main() method
+
 
